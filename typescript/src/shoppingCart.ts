@@ -96,11 +96,26 @@ export class ShoppingCart {
    * 注文する
    * @returns {Order} 商品点数と合計金額を返却する
    */
+
   public order(): Order {
     if (Object.keys(this.products).length === 0) {
       throw new Error("カートが空なので注文できません");
     }
 
+    return this.calcOrder();
+
+    /* 商品点数と合計金額の計算は別の関数に切り出す
+    const order = { count: 0, total: 0 };
+    for (const { count, product } of Object.values(this.products)) {
+      order.count += count;
+      order.total += product.price * count;
+    }
+    return order;
+    */
+  }
+
+  // 商品点数と合計金額の計算
+  private calcOrder(): Order {
     const order = { count: 0, total: 0 };
     for (const { count, product } of Object.values(this.products)) {
       order.count += count;
