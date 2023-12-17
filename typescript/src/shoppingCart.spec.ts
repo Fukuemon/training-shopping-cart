@@ -1,3 +1,4 @@
+import { ProductType } from "./product";
 import { Order, ShoppingCart } from "./shoppingCart";
 
 describe("ShoppingCart", () => {
@@ -8,12 +9,12 @@ describe("ShoppingCart", () => {
   });
 
   describe.each([
-    ["apple", 2, 1, 1],
-    ["orange", 3, 3, 0],
-    ["grape", 10, 5, 5],
+    ["apple" as ProductType, 2, 1, 1],
+    ["orange" as ProductType, 3, 3, 0],
+    ["grape" as ProductType, 10, 5, 5],
   ])(
     "add & remove",
-    (fruit: string, add: number, remove: number, expected: number) => {
+    (fruit: ProductType, add: number, remove: number, expected: number) => {
       const vFruit = fruit.padStart(6, " ");
       const vAdd = String(add).padStart(2, " ");
       const vRemove = String(remove).padStart(2, " ");
@@ -25,7 +26,7 @@ describe("ShoppingCart", () => {
     }
   );
 
-  describe.each<[[string, number][], Order]>([
+  describe.each<[[ProductType, number][], Order]>([
     [
       [
         ["apple", 3], // 150
@@ -49,7 +50,7 @@ describe("ShoppingCart", () => {
       ],
       { count: 12, total: 930 },
     ],
-  ])("order", (products: [string, number][], expected: Order) => {
+  ])("order", (products: [ProductType, number][], expected: Order) => {
     it(`products: ${JSON.stringify(products)}`, () => {
       for (const [fruit, count] of products) {
         cart.add(fruit, count);

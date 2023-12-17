@@ -1,4 +1,4 @@
-import { Product } from "./product";
+import { Product, ProductType } from "./product";
 
 export type Stock = {
   product: Product;
@@ -19,11 +19,11 @@ export class ShoppingCart {
 
   /**
    * カートに商品を追加する
-   * @param {string} code
+   * @param {ProductType} code
    * @param {number} count
    * @returns {number} 追加後の個数を返却する
    */
-  public add(code: string, count: number = 1): number {
+  public add(code: ProductType, count: number): number {
     if (code in this.products) {
       this.products[code].count += count;
     } else {
@@ -41,7 +41,7 @@ export class ShoppingCart {
    * @param count
    * @returns {number} 削除後の個数を返却する
    */
-  public remove(code: string, count: number = 1): number {
+  public remove(code: ProductType, count: number = 1): number {
     if (code in this.products) {
       this.products[code].count -= count;
       // 個数が0になったら削除する

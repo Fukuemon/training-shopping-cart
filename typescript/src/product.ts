@@ -1,3 +1,6 @@
+// 商品情報の型を定義
+export type ProductType = keyof typeof Product.productsInfo;
+
 export class Product {
   /**
    * 商品名
@@ -14,23 +17,21 @@ export class Product {
   /**
    * @param {string} code
    */
-  constructor(public code: string) {
+
+  // 商品情報をオブジェクトとして定義
+  public static productsInfo = {
+    grape: { name: "ぶどう", price: 100 },
+    apple: { name: "りんご", price: 50 },
+    orange: { name: "みかん", price: 70 },
+  };
+
+  constructor(public code: ProductType) {
     // コード値に応じた商品情報を格納する
-    switch (code) {
-      case "grape":
-        this.name = "ぶどう";
-        this.price = 100;
-        break;
-      case "apple":
-        this.name = "りんご";
-        this.price = 50;
-        break;
-      case "orange":
-        this.name = "みかん";
-        this.price = 70;
-        break;
-      default:
-        throw new Error("codeが不正な値です");
+    const product = Product.productsInfo[code];
+    if (!product) {
+      throw new Error("商品欄に存在しません");
     }
+    this.name = product.name;
+    this.price = product.price;
   }
 }
