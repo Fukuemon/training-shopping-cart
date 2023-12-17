@@ -24,15 +24,32 @@ export class ShoppingCart {
    * @returns {number} 追加後の個数を返却する
    */
   public add(code: ProductType, count: number): number {
+    // 早期returnを使い、if文を減らす
+
+    // すでにproductが存在する場合
     if (code in this.products) {
       this.products[code].count += count;
-    } else {
+      return this.products[code].count;
+    }
+
+    // 新規追加の場合
       this.products[code] = {
         product: new Product(code),
         count,
       };
-    }
+
     return this.products[code].count;
+
+    // 改善前
+    // if (code in this.products) {
+    //   this.products[code].count += count;
+    // } else {
+    //   this.products[code] = {
+    //     product: new Product(code),
+    //     count,
+    //   };
+    // }
+    // return this.products[code].count;
   }
 
   /**
@@ -42,18 +59,37 @@ export class ShoppingCart {
    * @returns {number} 削除後の個数を返却する
    */
   public remove(code: ProductType, count: number = 1): number {
-    if (code in this.products) {
+    // 早期returnを使い、if文を減らす
+
+    // productが存在しない場合
+    if (!(code in this.products)) {
+      return 0;
+    }
+
+    // productが存在する場合
       this.products[code].count -= count;
+
       // 個数が0になったら削除する
       if (this.products[code].count === 0) {
         delete this.products[code];
-        return 0;
-      } else {
-        return this.products[code].count;
-      }
-    } else {
       return 0;
     }
+
+    return this.products[code].count;
+
+    // 改善前
+    // if (code in this.products) {
+    //   this.products[code].count -= count;
+    //   // 個数が0になったら削除する
+    //   if (this.products[code].count === 0) {
+    //     delete this.products[code];
+    //     return 0;
+    //   } else {
+    //     return this.products[code].count;
+    //   }
+    // } else {
+    //   return 0;
+    // }
   }
 
   /**
