@@ -180,7 +180,7 @@ function isPositiveNumber(value: number): value is PositiveNumber {
   return value > 0;
 }
 ```
-2. add関数とremove関すでバリデーションを追加
+2. add関数とremove関数にバリデーションを追加
 ```ts
 public add(code: ProductType, count: number): number {
   if (!isPositiveNumber(count)) {
